@@ -71,13 +71,16 @@
             dragend: onDragEnd
           })
       }
+
       function connect() {
         socket = io.connect()
       }
+
       function onSocketCommand(command) {
         var handler = commandHandlers[command.name]
         handler(command.data, 0)
       }
+
       $(document).ready(function() {
         hookEventsFromCanvas('surface')
         createDrawingContext('surface')

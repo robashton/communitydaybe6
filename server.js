@@ -7,6 +7,7 @@ var http = require('http')
 var queueService = null
 ,   server = null
 ,   io = null
+,   clientName = null
 
 function startHttp(cb) {
   server = http.createServer(function(req, res) {
@@ -46,8 +47,11 @@ function startServiceBus(cb) {
   process.env.AZURE_SERVICEBUS_ACCESS_KEY = 'xcmDM8w6gztKHLPOvIXq80iTIdXGT7tQxcH7e6VIEpU=';
   queueService = azure.createServiceBusService()
   queueService.createTopicIfNotExists('commands', function() {
-    queueService.createSubscription('commands', 'clientj3', function(err) {
-      cb()
+    azure.RoleEnvironment.getDeploymentId(function(err, clientId) {
+      clientName = clientId || "local"
+      queueService.createSubscription('commands', clientName, function(err) {
+        cb()
+      })
     })
   })
 }
@@ -58,7 +62,7 @@ function startListeningOnBus(cb) {
 }
 
 function nextMessage() {
-  queueService.receiveSubscriptionMessage('commands', 'clientj3', function(err, msg) {
+  queueService.receiveSubscriptionMessage('commands', clientName, function(err, msg) {
     if(err) {
       console.error(err)
       return nextMessage()

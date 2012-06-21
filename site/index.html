@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<DOCTYPE html>
 <html>
   <head>
     <link rel="stylesheet" type="text/css" href="style.css"></link>
@@ -78,7 +78,7 @@
 
       function onSocketCommand(command) {
         var handler = commandHandlers[command.name]
-        handler(command.data, 0)
+        handler(command.data, command.sender)
       }
 
       $(document).ready(function() {

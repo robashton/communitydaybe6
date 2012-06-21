@@ -26,11 +26,12 @@ function startSockets(cb) {
   io = socketio.listen(server)
   io.set('transports', [
         , 'xhr-polling'
-        , 'jsonp-polling'
           ])
 
   io.on('connection', function(socket) {
     socket.on('command', function(data) {
+      data.sender = socket.id
+      data.server = clientName
       var msg = {
         body: JSON.stringify(data) 
       }

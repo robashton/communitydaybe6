@@ -49,7 +49,7 @@ function startServiceBus(cb) {
   queueService = azure.createServiceBusService()
   queueService.createTopicIfNotExists('commands', function() {
     azure.RoleEnvironment.getDeploymentId(function(err, clientId) {
-      clientName = clientId || "local"
+      clientName = clientId || err; //"local"
       queueService.createSubscription('commands', clientName, function(err) {
         cb()
       })

@@ -14,7 +14,10 @@ var server = http.createServer(function(req, res) {
 
 server.listen(process.env.port || 8000)
 var io = socketio.listen(server)
-
+io.set('transports', [
+      , 'xhr-polling'
+      , 'jsonp-polling'
+        ]);
 
 io.on('connection', function(socket) {
   socket.on('command', function(data) {

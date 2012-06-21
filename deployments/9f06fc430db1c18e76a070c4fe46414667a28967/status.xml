@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<deployment>
+  <id>9f06fc430db1c18e76a070c4fe46414667a28967</id>
+  <author>Rob Ashton</author>
+  <deployer>robashton</deployer>
+  <authorEmail>robashton@codeofrob.com</authorEmail>
+  <message>    Added client id stuff
+</message>
+  <status>Success</status>
+  <statusText></statusText>
+  <lastSuccessEndTime>2012-06-21T10:20:36.9979403+00:00</lastSuccessEndTime>
+  <receivedTime>2012-06-21T10:20:11.2967893+00:00</receivedTime>
+  <startTime>2012-06-21T10:20:14.9058871+00:00</startTime>
+  <endTime>2012-06-21T10:20:36.9979403+00:00</endTime>
+  <complete>True</complete>
+</deployment>

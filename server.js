@@ -7,7 +7,7 @@ var http = require('http')
 var queueService = null
 ,   server = null
 ,   io = null
-,   clientName = null
+,   clientName = 'process' + process.pid
 
 function startHttp(cb) {
   server = http.createServer(function(req, res) {
@@ -36,7 +36,6 @@ function startSockets(cb) {
         body: JSON.stringify(data) 
       }
       queueService.sendTopicMessage('commands', msg, function(err) {
-        console.log('sent', err)
       })
     })
   })
@@ -48,12 +47,8 @@ function startServiceBus(cb) {
   process.env.AZURE_SERVICEBUS_ACCESS_KEY = 'xcmDM8w6gztKHLPOvIXq80iTIdXGT7tQxcH7e6VIEpU=';
   queueService = azure.createServiceBusService()
   queueService.createTopicIfNotExists('commands', function() {
-    azure.RoleEnvironment.getDeploymentId(function(err, clientId) {
-      clientName = clientId || "local"
-      console.error(err)
-      queueService.createSubscription('commands', clientName, function(err) {
-        cb()
-      })
+    queueService.createSubscription('commands', clientName, function(err) {
+      cb()      
     })
   })
 }

@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<deployment>
+  <id>cd258286feb17bc9456b2dda406ced4ff6a147e0</id>
+  <author>Rob Ashton</author>
+  <deployer>robashton</deployer>
+  <authorEmail>robashton@codeofrob.com</authorEmail>
+  <message>    IE9 support
+</message>
+  <status>Success</status>
+  <statusText></statusText>
+  <lastSuccessEndTime>2012-06-21T07:58:45.7602775+00:00</lastSuccessEndTime>
+  <receivedTime>2012-06-21T07:58:37.7764646+00:00</receivedTime>
+  <startTime>2012-06-21T07:58:39.3857263+00:00</startTime>
+  <endTime>2012-06-21T07:58:45.7602775+00:00</endTime>
+  <complete>True</complete>
+</deployment>

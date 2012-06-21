@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<deployment>
+  <id>ba89847ba7c87db5752d2183adbbe5037c99069d</id>
+  <author>Rob Ashton</author>
+  <deployer>robashton</deployer>
+  <authorEmail>robashton@codeofrob.com</authorEmail>
+  <message>    Removed faffing
+</message>
+  <status>Success</status>
+  <statusText></statusText>
+  <lastSuccessEndTime>2012-06-21T07:34:59.2489018+00:00</lastSuccessEndTime>
+  <receivedTime>2012-06-21T07:34:51.0463543+00:00</receivedTime>
+  <startTime>2012-06-21T07:34:52.6712399+00:00</startTime>
+  <endTime>2012-06-21T07:34:59.2489018+00:00</endTime>
+  <complete>True</complete>
+</deployment>

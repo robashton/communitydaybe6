@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entries>
+  <entry time="2012-06-21T07:17:52.7235165+00:00" id="95207046-4a17-468d-860a-402772a89b18" type="0">
+    <message>New deployment received.</message>
+  </entry>
+  <entry time="2012-06-21T07:17:52.7547645+00:00" id="8536ac15-de9a-4862-8759-ef37cf7370b3" type="0">
+    <message>Updating branch 'master'.</message>
+  </entry>
+  <entry time="2012-06-21T07:17:53.3172285+00:00" id="be4bafc0-474b-414d-8432-13d7fdae7544" type="0">
+    <message>Preparing deployment for commit id '639eb56e60'.</message>
+  </entry>
+  <entry time="2012-06-21T07:17:53.4265965+00:00" id="e63f145a-42b4-4968-8f2d-af8340611944" type="0">
+    <message>Preparing files for deployment.</message>
+    <entry time="2012-06-21T07:17:53.9890605+00:00" id="6b01d17d-674c-4e5d-bb5d-5761f9a2b71c" type="0">
+      <message>Copied 'site'.
+Copied 'site\hammer.js'.
+Copied 'site\index.html'.
+Copied 'site\jquery.hammer.js'.
+Copied 'site\jquery.js'.
+Copied 'site\style.css'.</message>
+    </entry>
+  </entry>
+  <entry time="2012-06-21T07:17:54.0203085+00:00" id="09513d70-7042-4de7-ba8b-75e4adb9d78b" type="0">
+    <message>Deployment successful.</message>
+  </entry>
+</entries>

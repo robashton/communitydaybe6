@@ -43,16 +43,15 @@
       }
 
       function onDragStart(ev) {
-        console.log(ev.touches)
-        dispatch('start', ev.touches[0].position)
+        dispatch('start', ev.position)
       }
 
       function onDrag(ev) {
-        dispatch('move', ev.touches[0].position)
+        dispatch('move', ev.position)
       }
 
       function onDragEnd(ev) {
-        dispatch('end', ev.touches[0].position)
+        dispatch('end', ev.position)
       }
 
       function createDrawingContext(id) {

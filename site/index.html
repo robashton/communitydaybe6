@@ -1,0 +1,82 @@
+<html>
+  <head>
+    <link rel="stylesheet" type="text/css" href="style.css"></link>
+    <script src="jquery.js"></script>
+    <script src="hammer.js"></script>
+    <script src="jquery.hammer.js"></script>
+    <script type="text/javascript">
+      var canvas = null
+      ,   context = null
+      ,   actions = {}
+
+      function drawLine(from, to, index) {
+        context.strokeStyle = '#000'
+        context.beginPath()
+        context.moveTo(from.x, from.y)
+        context.lineTo(to.x, to.y)
+        context.stroke()
+      }
+
+      var commandHandlers = {
+        'start': function(position, index) {
+          actions[index] = position
+        },
+        'move': function(position, index) {
+          var oldPosition = actions[index]
+          drawLine(oldPosition, position)
+          actions[index] = position
+        },
+        'end': function(position, index) {
+          delete actions[index]
+        }
+      }
+
+      function dispatch(command, data) {
+        var handler = commandHandlers[command]
+        handler(data, 0)
+      }
+
+      function onDragStart(ev) {
+        var touches = ev.originalEvent.touches || [ev]
+        dispatch('start', touches[0].position)
+      }
+
+      function onDrag(ev) {
+        var touches = ev.originalEvent.touches || [ev]
+        dispatch('move', touches[0].position)
+      }
+
+      function onDragEnd(ev) {
+        var touches = ev.originalEvent.touches || [ev]
+        dispatch('end', touches[0].position)
+      }
+
+      function createDrawingContext(id) {
+        canvas = document.getElementById(id)
+        context = canvas.getContext('2d')
+      }
+
+      function hookEventsFromCanvas(id) {
+        $('#' + id)
+          .hammer({
+            prevent_default: true   
+           })
+          .on({
+            dragstart: onDragStart,
+            drag: onDrag,
+            dragend: onDragEnd
+          })
+      }
+      $(document).ready(function() {
+        hookEventsFromCanvas('surface')
+        createDrawingContext('surface')
+      });
+    </script>
+   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  </head>
+  <body>
+    <canvas id="surface" width="800" height="600">
+      Your browser doesn't support Canvas - wtf dude?
+    </canvas>
+  </body>
+</html>

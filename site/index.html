@@ -43,6 +43,7 @@
       }
 
       function onDragStart(ev) {
+        console.log(ev)
         var touches = ev.originalEvent.touches || [ev]
         dispatch('start', touches[0].position)
       }

@@ -4,10 +4,12 @@
     <script src="jquery.js"></script>
     <script src="hammer.js"></script>
     <script src="jquery.hammer.js"></script>
+    <script src="socket.io/socket.io.js"></script>
     <script type="text/javascript">
       var canvas = null
       ,   context = null
       ,   actions = {}
+      ,   socket = null
 
       function drawLine(from, to, index) {
         context.strokeStyle = '#000'
@@ -15,6 +17,7 @@
         context.moveTo(from.x, from.y)
         context.lineTo(to.x, to.y)
         context.stroke()
+        console.log(from, to)
       }
 
       var commandHandlers = {
@@ -34,6 +37,10 @@
       function dispatch(command, data) {
         var handler = commandHandlers[command]
         handler(data, 0)
+        socket.emit('command', {
+          name: command,
+          data: data
+            })
       }
 
       function onDragStart(ev) {
@@ -67,9 +74,18 @@
             dragend: onDragEnd
           })
       }
+      function connect() {
+        socket = io.connect()
+      }
+      function onSocketCommand(command) {
+        var handler = commandHandlers[command.name]
+        handler(command.data, 0)
+      }
       $(document).ready(function() {
         hookEventsFromCanvas('surface')
         createDrawingContext('surface')
+        connect();
+        socket.on('command', onSocketCommand)
       });
     </script>
    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">

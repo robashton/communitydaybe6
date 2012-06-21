@@ -43,6 +43,7 @@
       }
 
       function onDragStart(ev) {
+        console.log(ev.touches)
         dispatch('start', ev.touches[0].position)
       }
 

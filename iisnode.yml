@@ -1,10 +1,10 @@
 # For security reasons, logging, dev errors, and debugging 
 # should be disabled in production deployments:
 
-loggingEnabled: true 
+loggingEnabled: false
 debuggingEnabled: false
-devErrorsEnabled: true 
-node_env: development
+devErrorsEnabled: false
+node_env: production
 
 # Other settings with their default values follow.
 # For documentation see https://github.com/tjanczuk/iisnode/blob/master/src/samples/configuration/iisnode.yml

@@ -7,13 +7,21 @@
     <script src="jquery.hammer.js"></script>
     <script src="socket.io/socket.io.js"></script>
     <script type="text/javascript">
+
       var canvas = null
       ,   context = null
       ,   actions = {}
       ,   socket = null
+      ,   colours = {}
+
+      function colourForIndex(index) {
+        if(colours[index]) return colours[index]
+        colours[index] = '#'+Math.floor(Math.random()*16777215).toString(16)
+        return colours[index]
+      }
 
       function drawLine(from, to, index) {
-        context.strokeStyle = '#000'
+        context.strokeStyle = colourForIndex(index)
         context.beginPath()
         context.moveTo(from.x, from.y)
         context.lineTo(to.x, to.y)
@@ -26,7 +34,7 @@
         },
         'move': function(position, index) {
           var oldPosition = actions[index]
-          drawLine(oldPosition, position)
+          drawLine(oldPosition, position, index)
           actions[index] = position
         },
         'end': function(position, index) {
@@ -40,7 +48,7 @@
         socket.emit('command', {
           name: command,
           data: data
-            })
+         })
       }
 
       function onDragStart(ev) {
@@ -71,21 +79,15 @@
             dragend: onDragEnd
           })
       }
-
-      function connect() {
-        socket = io.connect()
-      }
-
-      function onSocketCommand(command) {
-        var handler = commandHandlers[command.name]
-        handler(command.data, command.sender)
+      var onServerCommand = function(data) {
+        commandHandlers[data.name](data.data, data.sender) 
       }
 
       $(document).ready(function() {
         hookEventsFromCanvas('surface')
         createDrawingContext('surface')
-        connect();
-        socket.on('command', onSocketCommand)
+        socket = io.connect()
+        socket.on('command', onServerCommand)
       });
     </script>
    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">

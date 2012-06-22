@@ -1,82 +1,31 @@
 var http = require('http')
 ,   paperboy = require('paperboy')
-,   socketio = require('socket.io')
-,   azure = require('azure')
+,   socketio  = require('socket.io')
 
-
-var queueService = null
-,   server = null
 ,   io = null
-,   clientName = 'process' + process.pid
 
-function startHttp(cb) {
-  server = http.createServer(function(req, res) {
-    paperboy
-      .deliver('site', req, res)
-      .otherwise(function() {
-        res.writeHead({ 'Content-Type' : 'text/plain'})
-        res.end('404 not found lol')
-      })
-  })
-  server.listen(process.env.port || 8000)
-  cb()
-}
 
-function startSockets(cb) {
-  io = socketio.listen(server)
-  io.set('transports', [
-        , 'xhr-polling'
-          ])
-
-  io.on('connection', function(socket) {
-    socket.on('command', function(data) {
-      data.sender = socket.id
-      data.server = clientName
-      var msg = {
-        body: JSON.stringify(data) 
-      }
-      queueService.sendTopicMessage('commands', msg, function(err) {
-      })
+var server = http.createServer(function(req, res) {
+  paperboy
+    .deliver('site', req, res)
+    .otherwise(function() {
+      res.writeHead({ 'Content-Type' : 'text/plain'})
+      res.end('404 not found ahhahahaah')
     })
-  })
-  cb()
-}
+});
 
-function startServiceBus(cb) {
-  process.env.AZURE_SERVICEBUS_NAMESPACE = 'communityday';
-  process.env.AZURE_SERVICEBUS_ACCESS_KEY = 'xcmDM8w6gztKHLPOvIXq80iTIdXGT7tQxcH7e6VIEpU=';
-  queueService = azure.createServiceBusService()
-  queueService.createTopicIfNotExists('commands', function() {
-    queueService.createSubscription('commands', clientName, function(err) {
-      cb()      
-    })
-  })
-}
+server.listen(process.env.port || 8000)
 
-function startListeningOnBus(cb) {
-  nextMessage()
-  cb()
-}
+io = socketio.listen(server)
+io.set('transports', [
+  'xhr-polling'
+])
 
-function nextMessage() {
-  queueService.receiveSubscriptionMessage('commands', clientName, function(err, msg) {
-    if(err) {
-      console.error(err)
-      return nextMessage()
-    }
-    if(msg.body !== '') 
-      io.sockets.emit('command', JSON.parse(msg.body))
-    nextMessage()
-  })
-}
+io.on('connection', function(socket) {
+  socket.on('command', function(data) {
+    data.sender= socket.id
+    io.sockets.emit('command', data)
 
-startServiceBus(function() {
-  startHttp(function() {
-    startSockets(function() {
-      startListeningOnBus(function() {
-        console.log('Server started')      
-      })
-    })
   })
+
 })
-

@@ -1,9 +1,8 @@
 {
-  "name" : "drawing"
-,  "version" : "1.0.0"
-,  "dependencies" : {
-    "socket.io" : ""
-,    "paperboy" : ""
-,    "azure" : ""
+  "name" : "comdaybe"
+, "version" : "1.0.0"
+, "dependencies" : {
+    "paperboy" : ""
+,   "socket.io" : ""
   }
 }
